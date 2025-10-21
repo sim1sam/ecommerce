@@ -1164,6 +1164,7 @@
                                 <a href="#" class="text-white"><i class="fab fa-pinterest"></i></a>
                             @endif
                         </div>
+                        
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
@@ -1234,15 +1235,39 @@
         <div class="footer-bottom border-top border-secondary py-3">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <p class="text-muted mb-0">&copy; {{ date('Y') }} {{ $footer->copyright ?? 'Diamonds Jewellery Collection. All rights reserved.' }}</p>
                     </div>
-                    <div class="col-md-6 text-end">
-                        <div class="payment-methods">
-                            <i class="fab fa-cc-visa text-muted me-2"></i>
-                            <i class="fab fa-cc-mastercard text-muted me-2"></i>
-                            <i class="fab fa-cc-paypal text-muted me-2"></i>
-                            <i class="fab fa-cc-stripe text-muted"></i>
+                    <div class="col-md-4 text-center">
+                        <!-- Developed By Link -->
+                        <div class="developed-by mb-2">
+                            @if($footer && $footer->developed_by_text && $footer->developed_by_link)
+                                <a href="{{ $footer->developed_by_link }}" target="_blank" class="text-muted text-decoration-none">
+                                    {{ $footer->developed_by_text }}
+                                </a>
+                            @else
+                                <a href="https://wisedynamic.com.bd/" target="_blank" class="text-muted text-decoration-none">
+                                    Developed By Wisedynamic IT
+                                </a>
+                            @endif
+                        </div>
+                        
+                        <!-- Middle Image -->
+                        @if($footer && $footer->middle_image)
+                            <img src="{{ asset($footer->middle_image) }}" alt="Footer Image" class="img-fluid" style="max-height: 40px;">
+                        @endif
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <!-- Payment Methods -->
+                        <div class="payment-methods d-flex justify-content-center">
+                            @if($footer && $footer->payment_images)
+                                <img src="{{ asset($footer->payment_images) }}" alt="Payment Methods" class="img-fluid" style="max-height: 25px;">
+                            @else
+                                <i class="fab fa-cc-visa text-muted me-2"></i>
+                                <i class="fab fa-cc-mastercard text-muted me-2"></i>
+                                <i class="fab fa-cc-paypal text-muted me-2"></i>
+                                <i class="fab fa-cc-stripe text-muted"></i>
+                            @endif
                         </div>
                     </div>
                 </div>

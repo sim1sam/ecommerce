@@ -19,6 +19,10 @@ class Footer extends Model
         'second_column',
         'third_column',
         'copyright',
-        'footer_color'
+        'footer_color',
+        'payment_images',
+        'developed_by_text',
+        'developed_by_link',
+        'middle_image'
     ];
 }

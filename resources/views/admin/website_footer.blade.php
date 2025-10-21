@@ -80,6 +80,36 @@
                                     <label>{{__('admin.Footer Background Color')}} <span class="text-danger">*</span></label>
                                     <input type="color" name="footer_color" class="form-control" value="{{ $footer->footer_color ?? '#343a40' }}" style="height: 50px;">
                                 </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.Payment Images')}}</label>
+                                    <input type="file" name="payment_images" class="form-control">
+                                    @if($footer->payment_images)
+                                        <div class="mt-2">
+                                            <img src="{{ asset($footer->payment_images) }}" alt="Payment Images" style="max-height: 50px;">
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.Developed By Text')}}</label>
+                                    <input type="text" name="developed_by_text" class="form-control" value="{{ $footer->developed_by_text ?? 'Developed By Wisedynamic IT' }}" placeholder="Developed By Wisedynamic IT">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.Developed By Link')}}</label>
+                                    <input type="url" name="developed_by_link" class="form-control" value="{{ $footer->developed_by_link ?? 'https://wisedynamic.com.bd/' }}" placeholder="https://wisedynamic.com.bd/">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.Middle Image')}}</label>
+                                    <input type="file" name="middle_image" class="form-control">
+                                    @if($footer->middle_image)
+                                        <div class="mt-2">
+                                            <img src="{{ asset($footer->middle_image) }}" alt="Middle Image" style="max-height: 50px;">
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
