@@ -271,6 +271,33 @@ class CartController extends Controller
             return response()->json(['message' => $notification],403);
         }
 
+        // Calculate current cart total
+        $cartTotal = 0;
+        if (Auth::guard('api')->check()) {
+            $user = Auth::guard('api')->user();
+            $cartItems = ShoppingCart::with(['product'])->where('user_id', $user->id)->get();
+            foreach ($cartItems as $item) {
+                $price = $item->product->offer_price ?? $item->product->price;
+                $cartTotal += $price * $item->qty;
+            }
+        } else {
+            $sessionCart = Session::get('guest_cart', []);
+            foreach ($sessionCart as $item) {
+                $product = \App\Models\Product::find($item['product_id']);
+                if ($product) {
+                    $price = $product->offer_price ?? $product->price;
+                    $quantity = $item['quantity'] ?? 1;
+                    $cartTotal += $price * $quantity;
+                }
+            }
+        }
+
+        // Check minimum purchase amount
+        if ($cartTotal < $coupon->min_purchase_price) {
+            $notification = trans('Minimum purchase amount of ') . $coupon->min_purchase_price . trans(' required for this coupon');
+            return response()->json(['message' => $notification],403);
+        }
+
         return response()->json(['coupon' => $coupon]);
     }
 

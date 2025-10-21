@@ -456,6 +456,17 @@ class CartController extends Controller
                 ]);
             }
 
+            // Calculate current cart total
+            $cartTotal = $this->calculateCartTotal();
+            
+            // Check minimum purchase amount
+            if ($cartTotal < $coupon->min_purchase_price) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Minimum purchase amount of ' . $coupon->min_purchase_price . ' required for this coupon'
+                ]);
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => 'Coupon applied successfully',
@@ -473,5 +484,36 @@ class CartController extends Controller
                 'message' => 'Failed to apply coupon: ' . $e->getMessage()
             ], 500);
         }
+    }
+    
+    private function calculateCartTotal()
+    {
+        $user = Auth::user();
+        $total = 0;
+        
+        if ($user) {
+            // Get cart items from database for authenticated users
+            $cartItems = ShoppingCart::with(['product'])
+                ->where('user_id', $user->id)
+                ->get();
+                
+            foreach ($cartItems as $item) {
+                $price = $item->product->offer_price ?? $item->product->price;
+                $total += $price * $item->qty;
+            }
+        } else {
+            // Get cart items from session for guest users
+            $sessionCart = Session::get('guest_cart', []);
+            foreach ($sessionCart as $item) {
+                $product = Product::find($item['product_id']);
+                if ($product) {
+                    $price = $product->offer_price ?? $product->price;
+                    $quantity = $item['quantity'] ?? 1;
+                    $total += $price * $quantity;
+                }
+            }
+        }
+        
+        return $total;
     }
 }
