@@ -291,6 +291,8 @@
 
                 <li class="{{ Route::is('admin.feature.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.feature.index') }}">{{__('admin.Features')}}</a></li>
 
+                <li class="{{ Route::is('admin.newsletter-setting.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.newsletter-setting.index') }}">{{__('admin.Newsletter Settings')}}</a></li>
+
             </ul>
 
           </li>

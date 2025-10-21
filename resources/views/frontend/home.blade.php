@@ -2274,6 +2274,25 @@
 </section> --}}
 
 <!-- Newsletter Section -->
+@if(isset($newsletterSetting) && $newsletterSetting && $newsletterSetting->status)
+<section class="newsletter-section" style="background: {{ $newsletterSetting->background_color }}; color: {{ $newsletterSetting->text_color }};">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="mb-4 fade-in" style="color: {{ $newsletterSetting->text_color }};">{{ $newsletterSetting->title }}</h2>
+                <p class="lead mb-4 fade-in" style="color: {{ $newsletterSetting->text_color }};">{{ $newsletterSetting->subtitle }}</p>
+                <form class="newsletter-form fade-in">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Enter your email address" required>
+                        <button class="btn" type="submit" style="background: {{ $newsletterSetting->button_color }}; color: {{ $newsletterSetting->text_color }};">{{ $newsletterSetting->button_text }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+@else
+<!-- Fallback Newsletter Section -->
 <section class="newsletter-section">
     <div class="container">
         <div class="row">
@@ -2290,6 +2309,7 @@
         </div>
     </div>
 </section>
+@endif
 <!-- Services Section -->
 <section class="py-5 bg-white services-section">
     <div class="container">

@@ -880,6 +880,9 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
 
     Route::resource('feature', \App\Http\Controllers\Admin\FeatureController::class);
 
+    Route::get('newsletter-setting', [\App\Http\Controllers\Admin\NewsletterSettingController::class, 'index'])->name('newsletter-setting.index');
+    Route::post('newsletter-setting', [\App\Http\Controllers\Admin\NewsletterSettingController::class, 'store'])->name('newsletter-setting.store');
+
 
 
     Route::get('inventory', [InventoryController::class, 'index'])->name('inventory');

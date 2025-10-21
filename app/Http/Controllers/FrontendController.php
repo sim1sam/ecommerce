@@ -35,6 +35,7 @@ use App\Models\Faq;
 use App\Models\CustomPage;
 use App\Models\TermsAndCondition;
 use App\Models\Feature;
+use App\Models\NewsletterSetting;
 
 use Cart;
 use Session;
@@ -157,6 +158,9 @@ class FrontendController extends Controller
         // Features - Dynamic features from admin
         $features = Feature::getActiveFeatures();
         
+        // Newsletter Settings - Dynamic newsletter settings from admin
+        $newsletterSetting = NewsletterSetting::getActiveSettings();
+        
         return view('frontend.home', compact(
             'categories', 
             'products',
@@ -175,6 +179,7 @@ class FrontendController extends Controller
             'services',
             'testimonials',
             'features',
+            'newsletterSetting',
             'setting',
             'homePageVisibility',
             'seoSetting'
