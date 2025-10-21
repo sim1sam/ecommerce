@@ -195,7 +195,7 @@
                                         <div class="text-end">
                                             <strong class="text-success">
                                                 @if($shipping->shipping_fee > 0)
-                                                    ${{ number_format($shipping->shipping_fee, 2) }}
+                                                    {{ $setting->currency_icon }}{{ number_format($shipping->shipping_fee, 2) }}
                                                 @else
                                                     Free
                                                 @endif
@@ -953,7 +953,7 @@ class Checkout {
                             item.variants.map(function(v) { return v.variant_name + ': ' + v.variant_value; }).join(', ') + 
                             '</div>' : '') +
                     '</div>' +
-                    '<div class="order-item-price">$' + totalItemPrice.toFixed(2) + '</div>' +
+                    '<div class="order-item-price">{{ $setting->currency_icon }}' + totalItemPrice.toFixed(2) + '</div>' +
                 '</div>';
         }).join('');
 
@@ -968,7 +968,7 @@ class Checkout {
                     '<input class="form-check-input" type="radio" name="shipping_method" id="shipping_' + method.id + '" value="' + method.id + '" ' + (index === 0 ? 'checked' : '') + '>' +
                     '<label class="form-check-label d-flex justify-content-between" for="shipping_' + method.id + '">' +
                         '<span>' + method.shipping_rule + '</span>' +
-                        '<span class="fw-bold">$' + parseFloat(method.shipping_fee || 0).toFixed(2) + '</span>' +
+                        '<span class="fw-bold">{{ $setting->currency_icon }}' + parseFloat(method.shipping_fee || 0).toFixed(2) + '</span>' +
                     '</label>' +
                 '</div>';
             }).join('');
@@ -1282,7 +1282,7 @@ class Checkout {
                 if (couponInfo && couponInfoText) {
                     const discountText = data.coupon.discount_type === 'percentage' 
                     ? data.coupon.discount + '% off'
-                    : '$' + data.coupon.discount + ' off';
+                    : '{{ $setting->currency_icon }}' + data.coupon.discount + ' off';
                 couponInfoText.textContent = 'Coupon "' + data.coupon.code + '" applied - ' + discountText;
                     couponInfo.style.display = 'block';
                 }
