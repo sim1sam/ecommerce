@@ -647,7 +647,8 @@ class FrontendController extends Controller
     public function customPage($slug)
     {
         $page = CustomPage::where(['slug' => $slug, 'status' => 1])->firstOrFail();
-        return view('frontend.custom-page', compact('page'));
+        $setting = Setting::first();
+        return view('frontend.custom-page', compact('page', 'setting'));
     }
     
     public function termsConditions()

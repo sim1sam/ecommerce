@@ -162,7 +162,7 @@ Route::group(['middleware' => ['maintainance']], function () {
     Route::get('/page/{slug}', [App\Http\Controllers\FrontendController::class, 'customPage'])->name('custom.page');
     Route::get('/terms-conditions', [App\Http\Controllers\FrontendController::class, 'termsConditions'])->name('terms.conditions');
     Route::get('/privacy-policy', [App\Http\Controllers\FrontendController::class, 'privacyPolicy'])->name('privacy.policy');
-    Route::view('/our-story', 'frontend.our-story')->name('our-story');
+    Route::get('/our-story', [App\Http\Controllers\FrontendController::class, 'customPage'])->name('our-story')->defaults('slug', 'our-story');
 
 // Frontend Customer Authentication Routes
 Route::group(['middleware' => 'guest'], function () {
