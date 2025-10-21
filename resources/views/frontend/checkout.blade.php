@@ -823,6 +823,12 @@ class Checkout {
                 this.loadPaymentMethods();
                 this.loadBankAccountDetails(data.bankPaymentInfo);
                 
+                // Restore applied coupon if exists
+                if (data.applied_coupon) {
+                    this.appliedCoupon = data.applied_coupon;
+                    this.restoreCouponState();
+                }
+                
                 // Store user data for potential use but don't auto-populate
                 if (data.user) {
                     this.userData = data.user;
@@ -1307,11 +1313,59 @@ class Checkout {
         }
     }
     
-    removeCoupon() {
+    restoreCouponState() {
+        if (!this.appliedCoupon) return;
+        
+        // Show applied coupon info
+        const couponInfo = document.getElementById('coupon-info');
+        const couponInfoText = document.getElementById('coupon-info-text');
+        if (couponInfo && couponInfoText) {
+            const discountText = this.appliedCoupon.discount_type === 'percentage' 
+                ? this.appliedCoupon.discount + '% off'
+                : '{{ $setting->currency_icon }}' + this.appliedCoupon.discount + ' off';
+            couponInfoText.textContent = 'Coupon "' + this.appliedCoupon.code + '" applied - ' + discountText;
+            couponInfo.style.display = 'block';
+        }
+        
+        // Disable coupon input and hide apply button
+        const couponInput = document.getElementById('coupon_code');
+        const applyCouponBtn = document.getElementById('apply-coupon-btn');
+        if (couponInput) {
+            couponInput.value = this.appliedCoupon.code;
+            couponInput.disabled = true;
+        }
+        if (applyCouponBtn) {
+            applyCouponBtn.style.display = 'none';
+        }
+        
+        // Show coupon discount in order summary
+        const couponDiscountRow = document.getElementById('coupon-discount');
+        if (couponDiscountRow) {
+            couponDiscountRow.style.display = 'flex';
+        }
+        
+        // Update order summary
+        this.updateOrderSummary();
+    }
+    
+    async removeCoupon() {
         this.appliedCoupon = null;
         this.updateOrderSummary();
         
-        const couponInput = document.getElementById('coupon-code');
+        // Clear coupon from session
+        try {
+            await fetch('{{ route("checkout.remove-coupon") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+        } catch (error) {
+            console.error('Error removing coupon from session:', error);
+        }
+        
+        const couponInput = document.getElementById('coupon_code');
         const applyCouponBtn = document.getElementById('apply-coupon-btn');
         const couponInfo = document.getElementById('coupon-info');
         const couponDiscountRow = document.getElementById('coupon-discount');

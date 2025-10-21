@@ -209,6 +209,7 @@ Route::get('/cart/calculate-product-price', [App\Http\Controllers\Frontend\CartC
 // Frontend Checkout Routes
 Route::get('/checkout/data', [App\Http\Controllers\Frontend\CheckoutController::class, 'getCheckoutData'])->name('checkout.data');
 Route::post('/checkout/apply-coupon', [App\Http\Controllers\Frontend\CheckoutController::class, 'applyCoupon'])->name('checkout.apply-coupon');
+Route::post('/checkout/remove-coupon', [App\Http\Controllers\Frontend\CheckoutController::class, 'removeCoupon'])->name('checkout.remove-coupon');
 Route::post('/checkout/place-order', [App\Http\Controllers\Frontend\CheckoutController::class, 'placeOrder'])->name('checkout.place-order');
 
 // Frontend Payment Routes

@@ -200,6 +200,9 @@ class CheckoutController extends Controller
             }
             $totals = $this->calculateCheckoutTotals($request);
             
+            // Get applied coupon from session
+            $appliedCoupon = Session::get('applied_coupon');
+            
             return response()->json([
                 'success' => true,
                 'cart_items' => $cartItems,
@@ -221,6 +224,11 @@ class CheckoutController extends Controller
                 'paystackAndMollie' => $paystackAndMollie,
                 'instamojo' => $instamojo,
                 'sslcommerz' => $sslcommerz,
+                'applied_coupon' => $appliedCoupon ? [
+                    'code' => $appliedCoupon->code,
+                    'discount_type' => $appliedCoupon->discount_type,
+                    'discount' => $appliedCoupon->discount
+                ] : null,
                 'subtotal' => $totals['subtotal'],
                 'total_amount' => $totals['total_amount'],
                 'total_qty' => $totals['total_qty'],
@@ -391,6 +399,26 @@ class CheckoutController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to apply coupon: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+    
+    public function removeCoupon(Request $request)
+    {
+        try {
+            // Remove coupon from session
+            Session::forget('applied_coupon');
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Coupon removed successfully'
+            ]);
+            
+        } catch (\Exception $e) {
+            \Log::error('Error in removeCoupon: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to remove coupon: ' . $e->getMessage()
             ], 500);
         }
     }
