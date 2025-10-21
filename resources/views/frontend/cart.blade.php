@@ -82,13 +82,13 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-2">
                         <span>Subtotal:</span>
-                        <span id="subtotal">$0.00</span>
+                        <span id="subtotal">{{ $setting->currency_icon }}0.00</span>
                     </div>
 
                     <hr>
                     <div class="d-flex justify-content-between mb-3">
                         <strong>Total:</strong>
-                        <strong id="total">$0.00</strong>
+                        <strong id="total">{{ $setting->currency_icon }}0.00</strong>
                     </div>
                     
 
@@ -336,7 +336,7 @@ class ShoppingCart {
                             ${item.variants && Array.isArray(item.variants) && item.variants.length > 0 ? `<br><small class="text-muted">Variants: ${item.variants.map(v => v.name).join(', ')}</small>` : ''}
                         </div>
                         <div class="col-12 col-md-2 mt-2 mt-md-0">
-                            <span class="fw-bold text-primary">$${productPrice}</span>
+                            <span class="fw-bold text-primary">{{ $setting->currency_icon }}${productPrice}</span>
                         </div>
                         <div class="col-12 col-md-3 mt-2 mt-md-0">
                             <div class="quantity-controls">
@@ -481,8 +481,8 @@ class ShoppingCart {
         
         const total = subtotal;
 
-        document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-        document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        document.getElementById('subtotal').textContent = `{{ $setting->currency_icon }}${subtotal.toFixed(2)}`;
+        document.getElementById('total').textContent = `{{ $setting->currency_icon }}${total.toFixed(2)}`;
     }
 
 
@@ -516,7 +516,7 @@ class ShoppingCart {
                             <img src="${imageUrl}" alt="${product.name}" onerror="this.src='{{ asset('frontend/images/default-product.svg') }}'">
                             <div class="product-info">
                                 <div class="product-name">${product.name}</div>
-                                <div class="product-price">{{ $setting->currency_icon ?? '$' }}${price}</div>
+                                <div class="product-price">{{ $setting->currency_icon }}${price}</div>
                             </div>
                             ${availableStock > 0 ? 
                                 `<button class="btn btn-sm btn-outline-primary" onclick="cart.addRecommendedToCart(${product.id})">
