@@ -144,6 +144,14 @@ class FrontendController extends Controller
             ->latest()
             ->take(3)
             ->get();
+            
+        // All Products - Show 8 products (2 rows of 4)
+        $allProducts = Product::with(['category', 'brand', 'reviews'])
+            ->where('status', 1)
+            ->where('approve_by_admin', 1)
+            ->latest()
+            ->take(8)
+            ->get();
         
         return view('frontend.home', compact(
             'categories', 
@@ -151,6 +159,7 @@ class FrontendController extends Controller
             'featuredProducts',
             'newArrivalProducts',
             'bestProducts',
+            'allProducts',
             'brands',
             'blogs',
             'sliders',

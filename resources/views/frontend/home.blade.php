@@ -1747,7 +1747,74 @@
 </section>
 @endif
 
-
+<!-- All Products Section -->
+<section class="all-products section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title fade-in">All Products</h2>
+                <p class="section-subtitle fade-in">Explore our complete collection of stunning jewellery pieces</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            @if(isset($allProducts) && $allProducts->count() > 0)
+                @foreach($allProducts->take(8) as $product)
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card fade-in" data-category="{{ $product->category->slug ?? '' }}" data-price="{{ $product->offer_price ?? $product->price }}" data-name="{{ $product->name }}">
+                        <div class="product-image">
+                            <a href="{{ route('product-detail', ['slug' => $product->slug]) }}">
+                                <img src="{{ $product->thumb_image ? asset($product->thumb_image) : asset('frontend/images/default-product.svg') }}" alt="{{ $product->name }}" class="img-fluid" onerror="this.src='{{ asset('frontend/images/default-product.svg') }}'">
+                            </a>
+                        
+                            <div class="product-overlay">
+                                <a href="{{ route('product-detail', ['slug' => $product->slug]) }}" class="btn btn-primary me-2">View Details</a>
+                            </div>
+                            @if($product->offer_price && $product->offer_price < $product->price)
+                                <span class="badge bg-danger position-absolute top-0 start-0 m-2">Sale</span>
+                            @endif
+                            @if($product->new_product)
+                                <span class="badge bg-success position-absolute top-0 end-0 m-2">New Arrival</span>
+                            @elseif($product->is_featured)
+                                <span class="badge bg-primary position-absolute top-0 end-0 m-2">Featured</span>
+                            @elseif($product->is_best)
+                                <span class="badge bg-warning position-absolute top-0 end-0 m-2">Best</span>
+                            @elseif($product->is_top)
+                                <span class="badge bg-info position-absolute top-0 end-0 m-2">Top</span>
+                            @endif
+                        </div>
+                        <div class="product-info">
+                            <h5 class="product-title">{{ $product->name }}</h5>
+                            <div class="product-price">
+                                @if($product->offer_price && $product->offer_price < $product->price)
+                                    {{ $setting->currency_icon }}{{ number_format($product->offer_price, 2) }}
+                                    <span class="original-price">{{ $setting->currency_icon }}{{ number_format($product->price, 2) }}</span>
+                                @else
+                                    {{ $setting->currency_icon }}{{ number_format($product->price, 2) }}
+                                @endif
+                            </div>
+                            <div class="product-rating mt-2">
+                                @for($i = 1; $i <= 5; $i++)
+                                    @if($i <= ($product->averageRating ?? 5))
+                                        <i class="fas fa-star text-warning"></i>
+                                    @else
+                                        <i class="fas fa-star text-muted"></i>
+                                    @endif
+                                @endfor
+                                <span class="rating-count">({{ $product->reviews->count() }})</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            @endif
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <a href="{{ route('products') }}" class="btn btn-primary">View All Products</a>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Statistics Section -->
 {{-- <section class="stats-section">
