@@ -1750,8 +1750,115 @@ class CheckoutController extends Controller
 
      public function payWithSslcommerz(Request $request)
      {
-         // SSLCommerz integration temporarily disabled - requires external package
-         return redirect()->route('checkout')->with('error', 'SSLCommerz payment is temporarily unavailable');
+         try {
+             $user = Auth::user();
+             $orderId = session('temp_order_id');
+             
+             if (!$orderId) {
+                 return redirect()->route('checkout')->with('error', 'Order not found');
+             }
+             
+             $order = Order::find($orderId);
+             if (!$order) {
+                 return redirect()->route('checkout')->with('error', 'Order not found');
+             }
+             
+             // Get SSLCommerz configuration
+             $sslcommerz = SslcommerzPayment::first();
+             if (!$sslcommerz || !$sslcommerz->status) {
+                 return redirect()->route('checkout')->with('error', 'SSLCommerz payment is not configured');
+             }
+             
+             // SSLCommerz configuration
+             $config = [
+                 'apiCredentials' => [
+                     'store_id' => $sslcommerz->store_id,
+                     'store_password' => $sslcommerz->store_password,
+                 ],
+                 'apiDomain' => $sslcommerz->mode == 'sandbox' ? 'https://sandbox.sslcommerz.com' : 'https://securepay.sslcommerz.com',
+                 'apiUrl' => [
+                     'make_payment' => '/gwprocess/v4/api.php',
+                     'order_validate' => '/validator/api/merchantTransIDvalidationAPI.php',
+                 ],
+                 'connect_from_localhost' => $sslcommerz->mode == 'sandbox',
+                 'success_url' => '/sslcommerz-success',
+                 'failed_url' => '/sslcommerz-fail',
+                 'cancel_url' => '/sslcommerz-cancel',
+             ];
+             
+             // Initialize SSLCommerz
+             $sslc = new \App\Library\SslCommerz\SslCommerzNotification($config);
+             
+             // Get order address information
+             $orderAddress = $order->orderAddress;
+             
+             // Get customer information properly
+             $customerName = $user ? $user->name : ($orderAddress->billing_first_name . ' ' . $orderAddress->billing_last_name);
+             $customerEmail = $user ? $user->email : $orderAddress->billing_email;
+             $customerPhone = $user ? ($user->phone ?? $orderAddress->billing_phone) : $orderAddress->billing_phone;
+             
+             // Validate required fields
+             if (empty($customerEmail)) {
+                 \Log::error('SSLCommerz: Customer email is empty', [
+                     'user_id' => $user ? $user->id : 'guest',
+                     'order_id' => $order->id,
+                     'billing_email' => $orderAddress->billing_email,
+                     'user_email' => $user ? $user->email : 'N/A',
+                     'order_address_exists' => $orderAddress ? 'yes' : 'no'
+                 ]);
+                 return redirect()->route('checkout')->with('error', 'Customer email is required for payment');
+             }
+             
+             // Log payment data for debugging
+             \Log::info('SSLCommerz Payment Data', [
+                 'customer_email' => $customerEmail,
+                 'customer_name' => $customerName,
+                 'customer_phone' => $customerPhone,
+                 'order_id' => $order->order_id,
+                 'total_amount' => $order->total_amount
+             ]);
+             
+             // Prepare payment data
+             $paymentData = [
+                 'total_amount' => $order->total_amount,
+                 'currency' => 'BDT',
+                 'tran_id' => $order->order_id,
+                 'product_category' => 'Ecommerce',
+                 'product_name' => 'Order #' . $order->order_id,
+                 'product_profile' => 'physical-goods',
+                 'cus_name' => $customerName,
+                 'cus_email' => $customerEmail,
+                 'cus_add1' => $orderAddress->billing_address ?? 'N/A',
+                 'cus_add2' => '',
+                 'cus_city' => $orderAddress->billing_city ?? 'Dhaka',
+                 'cus_state' => $orderAddress->billing_state ?? 'Dhaka',
+                 'cus_postcode' => $orderAddress->billing_zip ?? '1000',
+                 'cus_country' => 'Bangladesh',
+                 'cus_phone' => $customerPhone ?? 'N/A',
+                 'shipping_method' => 'YES',
+                 'num_of_item' => $order->orderProducts->count(),
+                 'ship_name' => $orderAddress->shipping_first_name . ' ' . $orderAddress->shipping_last_name ?? $customerName,
+                 'ship_add1' => $orderAddress->shipping_address ?? $orderAddress->billing_address ?? 'N/A',
+                 'ship_add2' => '',
+                 'ship_city' => $orderAddress->shipping_city ?? $orderAddress->billing_city ?? 'Dhaka',
+                 'ship_state' => $orderAddress->shipping_state ?? $orderAddress->billing_state ?? 'Dhaka',
+                 'ship_postcode' => $orderAddress->shipping_zip ?? $orderAddress->billing_zip ?? '1000',
+                 'ship_country' => 'Bangladesh',
+             ];
+             
+             // Make payment
+             $payment = $sslc->makePayment($paymentData, 'hosted');
+             
+             if ($payment) {
+                 return $payment;
+             } else {
+                 return redirect()->route('checkout')->with('error', 'Failed to initialize SSLCommerz payment');
+             }
+             
+         } catch (\Exception $e) {
+             \Log::error('SSLCommerz payment error: ' . $e->getMessage());
+             return redirect()->route('checkout')->with('error', 'SSLCommerz payment failed: ' . $e->getMessage());
+         }
      }
 
      public function sslcommerzSuccess(Request $request)
