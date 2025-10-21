@@ -1168,7 +1168,7 @@
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
                     <div class="footer-widget">
-                        <h6 class="mb-3">{{ $footer->column_two_title ?? 'Quick Links' }}</h6>
+                        <h6 class="mb-3">{{ $footer->first_column ?? 'Quick Links' }}</h6>
                         <ul class="list-unstyled">
                             @if($footerLinks1->count() > 0)
                                 @foreach($footerLinks1 as $link)
@@ -1186,7 +1186,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="footer-widget">
-                        <h6 class="mb-3">{{ $footer->column_three_title ?? 'Customer Service' }}</h6>
+                        <h6 class="mb-3">{{ $footer->second_column ?? 'Customer Service' }}</h6>
                         <ul class="list-unstyled">
                             @if($footerLinks2->count() > 0)
                                 @foreach($footerLinks2 as $link)
@@ -1204,7 +1204,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="footer-widget">
-                        <h6 class="mb-3">{{ $footer->column_four_title ?? 'Contact Info' }}</h6>
+                        <h6 class="mb-3">{{ $footer->third_column ?? 'Contact Info' }}</h6>
                         <div class="contact-info">
                             @if($footer && $footer->address)
                                 <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> {{ $footer->address }}</p>
