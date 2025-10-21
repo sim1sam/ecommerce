@@ -145,7 +145,7 @@
   'Brand' => 'Brand',
   'Select Brand' => 'Select Brand',
   'SKU' => 'SKU',
-  'Price' => 'Action',
+  'Price' => 'Price',
   'Offer Price' => 'Offer Price',
   'Stock Quantity' => 'Stock Quantity',
   'Weight' => 'Weight',
