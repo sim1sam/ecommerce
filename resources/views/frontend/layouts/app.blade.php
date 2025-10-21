@@ -181,6 +181,19 @@
             transition: all 0.3s ease;
         }
         
+        /* Product Price Dynamic Colors */
+        .product-price {
+            color: var(--primary-color) !important;
+        }
+        
+        .product-price .current-price {
+            color: var(--primary-color) !important;
+        }
+        
+        .product-price .original-price {
+            color: var(--text-light, #6c757d) !important;
+        }
+        
         /* Global Layout Fixes */
         html, body {
             overflow-x: hidden;

@@ -633,7 +633,7 @@ h1, h2, h3, h4, h5, h6 {
 .product-price {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--primary-color);
+    color: var(--primary-color) !important;
 }
 
 .product-price .original-price {

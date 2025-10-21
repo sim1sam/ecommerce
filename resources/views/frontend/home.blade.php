@@ -218,7 +218,7 @@
 .product-price {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #d4af37;
+    color: var(--primary-color);
 }
 
 .original-price {
