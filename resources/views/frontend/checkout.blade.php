@@ -346,15 +346,15 @@
                     
                     <div class="d-flex justify-content-between mb-2">
                         <span>Subtotal:</span>
-                        <span id="subtotal">$0.00</span>
+                        <span id="subtotal">{{ $setting->currency_icon }}0.00</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span>Shipping:</span>
-                        <span id="shipping-cost">$10.00</span>
+                        <span id="shipping-cost">{{ $setting->currency_icon }}10.00</span>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
                         <span>Tax:</span>
-                        <span id="tax">$0.00</span>
+                        <span id="tax">{{ $setting->currency_icon }}0.00</span>
                     </div>
                     
                     <!-- Coupon Section -->
@@ -376,11 +376,11 @@
                     <hr>
                     <div class="d-flex justify-content-between mb-2" id="coupon-discount" style="display: none;">
                         <span>Coupon Discount:</span>
-                        <span id="coupon-discount-amount" class="text-success">-$0.00</span>
+                        <span id="coupon-discount-amount" class="text-success">-{{ $setting->currency_icon }}0.00</span>
                     </div>
                     <div class="d-flex justify-content-between mb-3">
                         <strong>Total:</strong>
-                        <strong id="total">$0.00</strong>
+                        <strong id="total">{{ $setting->currency_icon }}0.00</strong>
                     </div>
                     
                     <div class="d-grid">
@@ -1174,7 +1174,7 @@ class Checkout {
             const selectedShipping = this.shippingMethods.find(function(method) { return method.id == selectedShippingId; });
             const shippingCost = selectedShipping ? parseFloat(selectedShipping.shipping_fee) : 0;
             
-            document.getElementById('shipping-cost').textContent = '$' + shippingCost.toFixed(2);
+            document.getElementById('shipping-cost').textContent = '{{ $setting->currency_icon }}' + shippingCost.toFixed(2);
             this.updateOrderSummary();
         }
     }
@@ -1182,14 +1182,14 @@ class Checkout {
     updateOrderSummary() {
         // Handle empty cart scenario
         if (!this.cart || this.cart.length === 0) {
-            document.getElementById('subtotal').textContent = '$0.00';
-            document.getElementById('shipping-cost').textContent = '$0.00';
-            document.getElementById('tax').textContent = '$0.00';
-            document.getElementById('total').textContent = '$0.00';
+            document.getElementById('subtotal').textContent = '{{ $setting->currency_icon }}0.00';
+            document.getElementById('shipping-cost').textContent = '{{ $setting->currency_icon }}0.00';
+            document.getElementById('tax').textContent = '{{ $setting->currency_icon }}0.00';
+            document.getElementById('total').textContent = '{{ $setting->currency_icon }}0.00';
             
             const couponDiscountElement = document.getElementById('coupon-discount-amount');
             if (couponDiscountElement) {
-                couponDiscountElement.textContent = '-$0.00';
+                couponDiscountElement.textContent = '-{{ $setting->currency_icon }}0.00';
             }
             return;
         }
@@ -1220,15 +1220,15 @@ class Checkout {
         const safeTotal = isNaN(total) ? 0 : total;
         const safeCouponDiscount = isNaN(couponDiscount) ? 0 : couponDiscount;
 
-        document.getElementById('subtotal').textContent = '$' + safeSubtotal.toFixed(2);
-        document.getElementById('shipping-cost').textContent = '$' + safeShipping.toFixed(2);
-        document.getElementById('tax').textContent = '$' + safeTax.toFixed(2);
-        document.getElementById('total').textContent = '$' + safeTotal.toFixed(2);
+        document.getElementById('subtotal').textContent = '{{ $setting->currency_icon }}' + safeSubtotal.toFixed(2);
+        document.getElementById('shipping-cost').textContent = '{{ $setting->currency_icon }}' + safeShipping.toFixed(2);
+        document.getElementById('tax').textContent = '{{ $setting->currency_icon }}' + safeTax.toFixed(2);
+        document.getElementById('total').textContent = '{{ $setting->currency_icon }}' + safeTotal.toFixed(2);
         
         // Update coupon discount display if exists
         const couponDiscountElement = document.getElementById('coupon-discount-amount');
         if (couponDiscountElement) {
-            couponDiscountElement.textContent = '-$' + safeCouponDiscount.toFixed(2);
+            couponDiscountElement.textContent = '-{{ $setting->currency_icon }}' + safeCouponDiscount.toFixed(2);
         }
     }
     

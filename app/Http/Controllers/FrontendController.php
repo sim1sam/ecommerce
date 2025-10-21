@@ -556,6 +556,7 @@ class FrontendController extends Controller
         $paystack_setting = \App\Models\PaystackAndMollie::first();
         $sslcommerz_setting = \App\Models\SslcommerzPayment::first();
         $bank_payment_setting = \App\Models\BankPayment::first();
+        $setting = \App\Models\Setting::first();
         
         return view('frontend.checkout', compact(
             'countries', 
@@ -571,7 +572,8 @@ class FrontendController extends Controller
             'instamojo_setting',
             'paystack_setting',
             'sslcommerz_setting',
-            'bank_payment_setting'
+            'bank_payment_setting',
+            'setting'
         ));
     }
 
