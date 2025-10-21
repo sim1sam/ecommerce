@@ -1273,18 +1273,18 @@
 </section>
 @endif
 
-<!-- Our Products -->
+<!-- New Arrival Products -->
 <section class="section-padding bg-light">
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h2 class="section-title fade-in"> Bestsellers</h2>
-                <p class="section-subtitle fade-in">Discover our carefully selected top-rated jewellery pieces</p>
+                <h2 class="section-title fade-in">New Arrival</h2>
+                <p class="section-subtitle fade-in">Discover our latest and newest jewellery pieces</p>
             </div>
         </div>
         <div class="row g-4">
-            @if(isset($products) && $products->count() > 0)
-                @foreach($products->take(4) as $product)
+            @if(isset($newArrivalProducts) && $newArrivalProducts->count() > 0)
+                @foreach($newArrivalProducts->take(4) as $product)
                 <div class="col-lg-3 col-md-6">
                     <div class="product-card fade-in" data-category="{{ $product->category->slug ?? '' }}" data-price="{{ $product->offer_price ?? $product->price }}" data-name="{{ $product->name }}">
                         <div class="product-image">
@@ -1298,7 +1298,9 @@
                             @if($product->offer_price && $product->offer_price < $product->price)
                                 <span class="badge bg-danger position-absolute top-0 start-0 m-2">Sale</span>
                             @endif
-                            @if($product->is_featured)
+                            @if($product->new_product)
+                                <span class="badge bg-success position-absolute top-0 end-0 m-2">New Arrival</span>
+                            @elseif($product->is_featured)
                                 <span class="badge bg-primary position-absolute top-0 end-0 m-2">Featured</span>
                             @endif
                         </div>
@@ -1330,7 +1332,7 @@
         </div>
         <div class="row mt-5">
             <div class="col-12 text-center">
-                <a href="{{ route('products') }}?filter=top" class="btn btn-primary">View All Bestsellers</a>
+                <a href="{{ route('products') }}?filter=new" class="btn btn-primary">View All New Arrivals</a>
             </div>
         </div>
     </div>

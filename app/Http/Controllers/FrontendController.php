@@ -97,9 +97,10 @@ class FrontendController extends Controller
             ->take(4)
             ->get();
             
-        // New Arrival Products - Show last 4 newest products
+        // New Arrival Products - Show products marked as new arrival
         $newArrivalProducts = Product::with(['category', 'brand', 'reviews'])
             ->where('status', 1)
+            ->where('new_product', 1)
             ->where('approve_by_admin', 1)
             ->latest()
             ->take(4)
