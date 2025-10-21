@@ -98,8 +98,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary:hover {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
+    background-color: var(--hover-color, var(--accent-color));
+    border-color: var(--hover-color, var(--accent-color));
     transform: translateY(-2px);
 }
 
@@ -109,8 +109,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-outline-primary:hover {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+    background-color: var(--hover-color, var(--primary-color));
+    border-color: var(--hover-color, var(--primary-color));
+    color: #fff !important;
 }
 
 /* Header Styles */
@@ -1171,3 +1172,35 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Removed conflicting dropdown CSS - handled in individual pages */
+
+/* Banner Card Hover Effects */
+.banner-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.banner-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.banner-card:hover .btn {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: #fff !important;
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.banner-card:hover .btn:hover {
+    background-color: var(--hover-color, var(--accent-color)) !important;
+    border-color: var(--hover-color, var(--accent-color)) !important;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.banner-card:hover img {
+    filter: brightness(1.05);
+    transition: all 0.3s ease;
+}

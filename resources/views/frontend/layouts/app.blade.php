@@ -101,6 +101,8 @@
             --soft-shadow: rgba(139, 123, 168, 0.25); /* Soft purple shadow */
             --pearl-white: #ffffff; /* For light gradient accents */
             --light-purple: #EAE8F0; /* Light purple tint */
+            /* Dynamic hover colors from admin settings */
+            --hover-color: {{ $setting->theme_two ?? '#A594C4' }}; /* Secondary color for hover states */
         }
         
         /* Enhanced Background Styling */
@@ -111,6 +113,72 @@
         
         .main-wrapper {
             background: transparent;
+        }
+        
+        /* Dynamic Button Hover Styles */
+        .btn-primary:hover {
+            background-color: var(--hover-color) !important;
+            border-color: var(--hover-color) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--hover-color) !important;
+            border-color: var(--hover-color) !important;
+            color: #fff !important;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--hover-color) !important;
+            border-color: var(--hover-color) !important;
+            transform: translateY(-2px);
+        }
+        
+        /* Login/Register Button Hover */
+        .btn-login:hover, .btn-register:hover {
+            background-color: var(--hover-color) !important;
+            border-color: var(--hover-color) !important;
+            transform: translateY(-2px);
+        }
+        
+        /* Newsletter Button Hover */
+        .newsletter-form .btn:hover {
+            background-color: var(--hover-color) !important;
+            border-color: var(--hover-color) !important;
+            transform: translateY(-2px);
+        }
+        
+        /* Banner Image Hover Effects */
+        .banner-card {
+            transition: all 0.3s ease;
+        }
+        
+        .banner-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .banner-card:hover .btn {
+            background-color: var(--primary-color) !important;
+            border-color: var(--primary-color) !important;
+            color: #fff !important;
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .banner-card:hover .btn:hover {
+            background-color: var(--hover-color) !important;
+            border-color: var(--hover-color) !important;
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+        
+        /* Remove any default brown hover colors */
+        .banner-card:hover img {
+            filter: brightness(1.05);
+            transition: all 0.3s ease;
         }
         
         /* Global Layout Fixes */
