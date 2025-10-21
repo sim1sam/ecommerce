@@ -113,8 +113,10 @@
 
 <style>
 :root {
-    /* Purple-Gray Jewelry Theme with Gold Buttons */
-    --primary-color: #8B7BA8;     /* Elegant purple */
+    /* Dynamic Colors from Admin Settings */
+    --primary-color: {{ $setting->theme_one ?? '#8B7BA8' }};
+    --secondary-color: {{ $setting->theme_two ?? '#A294C2' }};
+    --background-color: {{ $setting->background_color ?? '#F7F6FA' }};
     --accent-color: #A294C2;      /* Soft lavender */
     --light-purple: #C8BFD9;      /* Light purple */
     --dark-purple: #6B5B73;       /* Deep purple-gray */
@@ -123,15 +125,15 @@
     --elegant-gray: #2c2c2c;      /* Dark text */
     --soft-shadow: rgba(139, 123, 168, 0.2); /* Purple shadow */
     
-    /* Gold Button Colors */
+    /* Dynamic Button Colors */
     --primary-gold: var(--primary-color);
-    --light-gold: var(--accent-color);
+    --light-gold: var(--secondary-color);
     --dark-gold: var(--dark-purple);
     --gold-shadow: var(--soft-shadow);
 }
 
 .login-section {
-    background: linear-gradient(135deg, var(--pearl-white) 0%, var(--light-purple) 50%, var(--primary-color) 100%);
+    background: var(--background-color);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -213,7 +215,7 @@
 }
 
 .form-control {
-    border: 2px solid rgba(212, 175, 55, 0.2);
+    border: 2px solid var(--primary-color);
     border-radius: 12px;
     padding: 15px 20px;
     font-size: 16px;
@@ -223,10 +225,14 @@
 }
 
 .form-control:focus {
-    border-color: var(--primary-gold);
-    box-shadow: 0 0 0 0.2rem var(--soft-shadow);
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 0.2rem rgba(139, 123, 168, 0.2);
     background: white;
     outline: none;
+}
+
+.form-control:hover {
+    border-color: var(--secondary-color);
 }
 
 .form-control::placeholder {
@@ -260,7 +266,7 @@
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-gold) 0%, var(--dark-gold) 100%);
+    background: var(--primary-color);
     border: none;
     border-radius: 12px;
     padding: 15px 40px;
@@ -290,9 +296,9 @@
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, var(--dark-gold) 0%, var(--primary-gold) 100%);
+    background: var(--secondary-color);
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px var(--soft-shadow);
+    box-shadow: 0 10px 30px rgba(139, 123, 168, 0.3);
     color: white;
 }
 

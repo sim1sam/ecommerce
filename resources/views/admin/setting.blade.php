@@ -663,6 +663,11 @@
                                                                 <input type="color" class="form-control" name="theme_two" value="{{ $setting->theme_two }}">
                                                             </div>
 
+                                                            <div class="form-group">
+                                                                <label for="">{{__('Background color')}}</label>
+                                                                <input type="color" class="form-control" name="background_color" value="{{ $setting->background_color ?? '#F7F6FA' }}">
+                                                            </div>
+
                                                             <button class="btn btn-primary">{{__('admin.Update')}}</button>
                                                         </form>
                                                     </div>
