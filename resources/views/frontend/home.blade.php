@@ -2294,42 +2294,55 @@
 <section class="py-5 bg-white services-section">
     <div class="container">
         <div class="row text-center">
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="d-flex flex-column align-items-center">
-                    <div class="mb-3">
-                        <i class="fas fa-shipping-fast" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+            @if(isset($features) && $features->count() > 0)
+                @foreach($features as $feature)
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="mb-3">
+                            <i class="{{ $feature->icon }}" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+                        </div>
+                        <h6 class="fw-semibold mb-2" style="color: #333; font-size: 0.95rem;">{{ $feature->title }}</h6>
+                        @if($feature->description)
+                            <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.4;">{{ $feature->description }}</p>
+                        @endif
                     </div>
-                    <h6 class="fw-semibold mb-2" style="color: #333; font-size: 0.95rem;">Free UK Shipping</h6>
-                    {{-- <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.4;">Free shipping on all orders</p> --}}
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="d-flex flex-column align-items-center">
-                    <div class="mb-3">
-                        <i class="fas fa-headset" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+                @endforeach
+            @else
+                {{-- Fallback static features if no dynamic features are set --}}
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="mb-3">
+                            <i class="fas fa-shipping-fast" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+                        </div>
+                        <h6 class="fw-semibold mb-2" style="color: #333; font-size: 0.95rem;">Free UK Shipping</h6>
                     </div>
-                    <h6 class="fw-semibold mb-2" style="color: #333; font-size: 0.95rem;">24/7 Support</h6>
-                    {{-- <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.4;">Dedicated customer support</p> --}}
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="d-flex flex-column align-items-center">
-                    <div class="mb-3">
-                        <i class="fas fa-undo-alt" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="mb-3">
+                            <i class="fas fa-headset" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+                        </div>
+                        <h6 class="fw-semibold mb-2" style="color: #333; font-size: 0.95rem;">24/7 Support</h6>
                     </div>
-                    <h6 class="fw-semibold mb-2" style="color: #333; font-size: 0.95rem;"> Return and Refunds</h6>
-{{-- <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.4;">30-day money back guarantee</p> --}}
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="d-flex flex-column align-items-center">
-                    <div class="mb-3">
-                        <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="mb-3">
+                            <i class="fas fa-undo-alt" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+                        </div>
+                        <h6 class="fw-semibold mb-2" style="color: #333; font-size: 0.95rem;">Return and Refunds</h6>
                     </div>
-                    <h6 class="fw-semibold mb-2" style="color: #333; font-size: 0.95rem;">100% Payment Secure</h6>
-                    {{-- <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.4;">Bank-level security protection</p> --}}
                 </div>
-            </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="mb-3">
+                            <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: var(--primary-color);"></i>
+                        </div>
+                        <h6 class="fw-semibold mb-2" style="color: #333; font-size: 0.95rem;">100% Payment Secure</h6>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </section>

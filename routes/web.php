@@ -878,6 +878,8 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::get('third-col-footer-link', [FooterLinkController::class, 'thirdColFooterLink'])->name('third-col-footer-link');
     Route::put('update-col-title/{id}', [FooterLinkController::class, 'updateColTitle'])->name('update-col-title');
 
+    Route::resource('feature', \App\Http\Controllers\Admin\FeatureController::class);
+
 
 
     Route::get('inventory', [InventoryController::class, 'index'])->name('inventory');

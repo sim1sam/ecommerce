@@ -34,6 +34,7 @@ use App\Models\AboutUs;
 use App\Models\Faq;
 use App\Models\CustomPage;
 use App\Models\TermsAndCondition;
+use App\Models\Feature;
 
 use Cart;
 use Session;
@@ -152,6 +153,9 @@ class FrontendController extends Controller
             ->latest()
             ->take(8)
             ->get();
+            
+        // Features - Dynamic features from admin
+        $features = Feature::getActiveFeatures();
         
         return view('frontend.home', compact(
             'categories', 
@@ -170,6 +174,7 @@ class FrontendController extends Controller
             'flashSaleProducts',
             'services',
             'testimonials',
+            'features',
             'setting',
             'homePageVisibility',
             'seoSetting'

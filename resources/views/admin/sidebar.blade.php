@@ -289,6 +289,8 @@
 
                 <li class="{{ Route::is('admin.third-col-footer-link') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.third-col-footer-link') }}">{{__('admin.Third Column Link')}}</a></li>
 
+                <li class="{{ Route::is('admin.feature.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.feature.index') }}">{{__('admin.Features')}}</a></li>
+
             </ul>
 
           </li>
