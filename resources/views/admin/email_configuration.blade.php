@@ -66,6 +66,18 @@
                                         </select>
                                     </div>
                                 </div>
+                                
+                                <!-- Email Verification Toggle -->
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="email_verification_required">{{__('Email Verification Required')}}</label>
+                                        <select name="email_verification_required" id="email_verification_required" class="form-control">
+                                            <option {{ $email->email_verification_required == 1 ? 'selected' : '' }} value="1">{{__('Yes')}}</option>
+                                            <option {{ $email->email_verification_required == 0 ? 'selected' : '' }} value="0">{{__('No')}}</option>
+                                        </select>
+                                        <small class="text-muted">{{__('When enabled, customers must verify their email before login. When disabled, customers can login immediately after registration.')}}</small>
+                                    </div>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-success">{{__('admin.Update')}}</button>
                         </form>

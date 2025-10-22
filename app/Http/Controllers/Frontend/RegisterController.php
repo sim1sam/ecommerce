@@ -81,18 +81,36 @@ class RegisterController extends Controller
         $user->phone = $request->phone ? $request->phone : '';
         $user->agree_policy = $request->agree ? 1 : 0;
         $user->password = Hash::make($request->password);
-        $user->status = 0;
-        $user->save();
+        // Check if email verification is required
+        $emailConfig = \App\Models\EmailConfiguration::first();
+        $emailVerificationRequired = $emailConfig ? $emailConfig->email_verification_required : 1;
+        
+        if ($emailVerificationRequired == 1) {
+            $user->status = 0;
+            $user->save();
 
-        // Send verification email using Laravel's built-in system
-        $user->sendEmailVerificationNotification();
+            // Send verification email using Laravel's built-in system
+            $user->sendEmailVerificationNotification();
 
-        // Send SMS if enabled
-        $this->sendRegistrationSMS($user);
+            // Send SMS if enabled
+            $this->sendRegistrationSMS($user);
 
-        $notification = trans('Registration successful. Please check your email for verification.');
-        $notification = array('messege' => $notification, 'alert-type' => 'success');
-        return redirect()->route('login')->with($notification);
+            $notification = trans('Registration successful. Please check your email for verification.');
+            $notification = array('messege' => $notification, 'alert-type' => 'success');
+            return redirect()->route('login')->with($notification);
+        } else {
+            // Email verification not required - activate user immediately
+            $user->status = 1;
+            $user->email_verified_at = now();
+            $user->save();
+
+            // Send SMS if enabled
+            $this->sendRegistrationSMS($user);
+
+            $notification = trans('Registration successful. You can now login.');
+            $notification = array('messege' => $notification, 'alert-type' => 'success');
+            return redirect()->route('login')->with($notification);
+        }
     }
 
     /**

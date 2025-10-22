@@ -43,6 +43,7 @@ class EmailConfigurationController extends Controller
         $email->smtp_password = $request->smtp_password;
         $email->mail_port = $request->mail_port;
         $email->mail_encryption = $request->mail_encryption;
+        $email->email_verification_required = $request->email_verification_required ?? 1;
         $email->save();
 
         $notification=  trans('admin_validation.Update Successfully');

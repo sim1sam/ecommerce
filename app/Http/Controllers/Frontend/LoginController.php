@@ -72,7 +72,11 @@ class LoginController extends Controller
 
         $user = User::where('email', $request->email)->first();
         if($user){
-            if($user->email_verified_at == null){
+            // Check if email verification is required
+            $emailConfig = \App\Models\EmailConfiguration::first();
+            $emailVerificationRequired = $emailConfig ? $emailConfig->email_verification_required : 1;
+            
+            if($emailVerificationRequired == 1 && $user->email_verified_at == null){
                 $notification = trans('Please verify your email');
                 return response()->json(['error' => $notification], 403);
             }

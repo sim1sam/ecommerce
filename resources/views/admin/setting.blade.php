@@ -156,6 +156,15 @@
                                                             <input type="text" name="tax" class="form-control" placeholder="5%" value="{{ $setting->tax }}">
                                                           </div>
 
+                                                          <div class="form-group">
+                                                            <label for="">{{__('Email Verification Required')}}</label>
+                                                            <select name="email_verification_required" class="form-control">
+                                                                <option {{ $setting->email_verification_required == 1 ? 'selected' : '' }} value="1">{{__('Yes')}}</option>
+                                                                <option {{ $setting->email_verification_required == 0 ? 'selected' : '' }} value="0">{{__('No')}}</option>
+                                                            </select>
+                                                            <small class="text-muted">{{__('When enabled, customers must verify their email before login. When disabled, customers can login immediately after registration.')}}</small>
+                                                          </div>
+
 
                                                           <div class="form-group">
                                                               <label for="">{{__('admin.Currency Icon')}}</label>

@@ -202,6 +202,7 @@ class SettingController extends Controller
         $setting->currency_icon = $request->currency_icon;
         $setting->timezone = $request->timezone;
         $setting->tax = $request->tax;
+        $setting->email_verification_required = $request->email_verification_required;
         $setting->save();
 
         $notification = trans('admin_validation.Update Successfully');
