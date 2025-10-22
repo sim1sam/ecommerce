@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Setting;
 
 class DashboardController extends Controller
 {
@@ -60,11 +61,14 @@ class DashboardController extends Controller
             \Log::info('Wishlist model not found: ' . $e->getMessage());
         }
         
+        $setting = Setting::first();
+        
         return view('frontend.dashboard.index', compact(
             'totalOrders',
             'completedOrders', 
             'wishlistCount',
-            'recentOrders'
+            'recentOrders',
+            'setting'
         ));
     }
 }

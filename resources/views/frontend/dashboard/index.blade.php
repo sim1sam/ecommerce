@@ -155,7 +155,7 @@
                                                         {{ $statusText }}
                                                     </span>
                                                 </td>
-                                                <td>${{ number_format($order->total_amount ?? 0, 2) }}</td>
+                                                <td>{{ $setting->currency_icon ?? '$' }}{{ number_format($order->total_amount ?? 0, 2) }}</td>
                                                 <td>
                                                     <a href="{{ route('orders.show', $order->id) }}" class="btn btn-outline-primary btn-sm">View</a>
                                                 </td>

@@ -75,7 +75,7 @@
                                         </td>
                                         <td>
                                             <strong class="text-success">
-                                                ${{ number_format($order->total_amount ?? $order->amount_real_currency ?? 0, 2) }}
+                                                {{ $setting->currency_icon ?? '$' }}{{ number_format($order->total_amount ?? $order->amount_real_currency ?? 0, 2) }}
                                             </strong>
                                         </td>
                                         <td>

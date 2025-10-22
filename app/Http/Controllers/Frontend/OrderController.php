@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Setting;
 
 class OrderController extends Controller
 {
@@ -44,7 +45,8 @@ class OrderController extends Controller
             \Log::info('Order model not found or has different structure: ' . $e->getMessage());
         }
         
-        return view('frontend.orders.index', compact('orders'));
+        $setting = Setting::first();
+        return view('frontend.orders.index', compact('orders', 'setting'));
     }
 
     /**
