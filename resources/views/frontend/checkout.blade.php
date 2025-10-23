@@ -1486,7 +1486,7 @@ $(document).ready(function() {
         
         if (countryId) {
             $.ajax({
-                url: '{{ url("public/states") }}/' + countryId,
+                url: '{{ url("api/states") }}/' + countryId,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -1514,7 +1514,7 @@ $(document).ready(function() {
         
         if (stateId) {
             $.ajax({
-                url: '{{ url("public/cities") }}/' + stateId,
+                url: '{{ url("api/cities") }}/' + stateId,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -1544,7 +1544,7 @@ $(document).ready(function() {
         
         if (countryId) {
             $.ajax({
-                url: '{{ url("public/states") }}/' + countryId,
+                url: '{{ url("api/states") }}/' + countryId,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -1572,7 +1572,7 @@ $(document).ready(function() {
         
         if (stateId) {
             $.ajax({
-                url: '{{ url("public/cities") }}/' + stateId,
+                url: '{{ url("api/cities") }}/' + stateId,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -1591,6 +1591,10 @@ $(document).ready(function() {
     });
 });
 </script>
+@endpush
+
+@push('scripts')
+<script src="{{ asset('js/location-fallback.js') }}"></script>
 @endpush
 
 @endsection

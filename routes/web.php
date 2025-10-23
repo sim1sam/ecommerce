@@ -141,8 +141,83 @@ Route::group(['as'=> 'user.', 'prefix' => 'user'],function (){
 });
 
 // Public location endpoints for checkout (outside middleware groups)
-Route::get('/public/states/{country}', [App\Http\Controllers\Frontend\PublicLocationController::class, 'getStatesByCountry'])->name('public.states');
-Route::get('/public/cities/{state}', [App\Http\Controllers\Frontend\PublicLocationController::class, 'getCitiesByState'])->name('public.cities');
+Route::get('/public/states/{country}', function($country) {
+    try {
+        $states = \App\Models\CountryState::where('country_id', $country)
+                                         ->where('status', 1)
+                                         ->select('id', 'name')
+                                         ->get();
+        return response()->json($states);
+    } catch (\Exception $e) {
+        \Log::error('Error loading states for country ' . $country . ': ' . $e->getMessage());
+        return response()->json(['error' => 'Failed to load states'], 500);
+    }
+})->name('public.states');
+
+Route::get('/public/cities/{state}', function($state) {
+    try {
+        $cities = \App\Models\City::where('country_state_id', $state)
+                                 ->where('status', 1)
+                                 ->select('id', 'name')
+                                 ->get();
+        return response()->json($cities);
+    } catch (\Exception $e) {
+        \Log::error('Error loading cities for state ' . $state . ': ' . $e->getMessage());
+        return response()->json(['error' => 'Failed to load cities'], 500);
+    }
+})->name('public.cities');
+
+// Alternative routes for production compatibility
+Route::get('/api/states/{country}', function($country) {
+    try {
+        $states = \App\Models\CountryState::where('country_id', $country)
+                                         ->where('status', 1)
+                                         ->select('id', 'name')
+                                         ->get();
+        return response()->json($states);
+    } catch (\Exception $e) {
+        \Log::error('Error loading states for country ' . $country . ': ' . $e->getMessage());
+        return response()->json(['error' => 'Failed to load states'], 500);
+    }
+})->name('api.states');
+
+Route::get('/api/cities/{state}', function($state) {
+    try {
+        $cities = \App\Models\City::where('country_state_id', $state)
+                                 ->where('status', 1)
+                                 ->select('id', 'name')
+                                 ->get();
+        return response()->json($cities);
+    } catch (\Exception $e) {
+        \Log::error('Error loading cities for state ' . $state . ': ' . $e->getMessage());
+        return response()->json(['error' => 'Failed to load cities'], 500);
+    }
+})->name('api.cities');
+
+// Debug route to test if routing is working
+Route::get('/test-route', function() {
+    return response()->json(['message' => 'Route is working', 'timestamp' => now()]);
+});
+
+// Simple test route for states
+Route::get('/test-states/{country}', function($country) {
+    try {
+        $states = \App\Models\CountryState::where('country_id', $country)
+                                         ->where('status', 1)
+                                         ->select('id', 'name')
+                                         ->get();
+        return response()->json([
+            'success' => true,
+            'data' => $states,
+            'count' => $states->count()
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'error' => $e->getMessage()
+        ], 500);
+    }
+});
 
 Route::group(['middleware' => ['demo','XSS']], function () {
 Route::group(['middleware' => ['maintainance']], function () {
@@ -413,7 +488,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Seller Registration Routes
     Route::get('seller/register', [SellerRegisterController::class,'showRegistrationForm'])->name('seller.register');
-    Route::post('seller/register', [SellerRegisterController::class,'register'])->name('seller.register');
+    Route::post('seller/register', [SellerRegisterController::class,'register'])->name('seller.register.post');
     Route::post('seller/store-register', [SellerRegisterController::class,'register'])->name('seller.store-register');
     Route::get('seller/state-by-country/{id}', [App\Http\Controllers\Frontend\LocationController::class,'getStatesByCountry'])->name('seller.state-by-country');
     Route::get('seller/city-by-state/{id}', [App\Http\Controllers\Frontend\LocationController::class,'getCitiesByState'])->name('seller.city-by-state');
@@ -424,7 +499,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     // Seller Login Routes
     Route::get('seller/login', [SellerLoginController::class,'sellerLoginPage'])->name('seller.login');
-    Route::post('seller/login', [SellerLoginController::class,'storeLogin'])->name('seller.login');
+    Route::post('seller/login', [SellerLoginController::class,'storeLogin'])->name('seller.login.post');
     
     // Seller Forgot Password Routes
     Route::get('seller/forget-password', [App\Http\Controllers\WEB\Seller\Auth\SellerForgotPasswordController::class,'forgetPassword'])->name('seller.forget.password');

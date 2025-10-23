@@ -14,12 +14,17 @@ class PublicLocationController extends Controller
      */
     public function getStatesByCountry($country)
     {
-        $states = CountryState::where('country_id', $country)
-                             ->where('status', 1)
-                             ->select('id', 'name')
-                             ->get();
-        
-        return response()->json($states);
+        try {
+            $states = CountryState::where('country_id', $country)
+                                 ->where('status', 1)
+                                 ->select('id', 'name')
+                                 ->get();
+            
+            return response()->json($states);
+        } catch (\Exception $e) {
+            \Log::error('Error loading states for country ' . $country . ': ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to load states'], 500);
+        }
     }
 
     /**
@@ -27,11 +32,16 @@ class PublicLocationController extends Controller
      */
     public function getCitiesByState($state)
     {
-        $cities = City::where('country_state_id', $state)
-                     ->where('status', 1)
-                     ->select('id', 'name')
-                     ->get();
-        
-        return response()->json($cities);
+        try {
+            $cities = City::where('country_state_id', $state)
+                         ->where('status', 1)
+                         ->select('id', 'name')
+                         ->get();
+            
+            return response()->json($cities);
+        } catch (\Exception $e) {
+            \Log::error('Error loading cities for state ' . $state . ': ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to load cities'], 500);
+        }
     }
 }
