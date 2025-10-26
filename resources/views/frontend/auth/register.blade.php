@@ -338,7 +338,7 @@
     background: var(--secondary-color);
     transform: translateY(-2px);
     box-shadow: 0 10px 30px rgba(139, 123, 168, 0.3);
-    color: white;
+    color: white !important; /* Keep text color white on hover */
 }
 
 .form-check-label {

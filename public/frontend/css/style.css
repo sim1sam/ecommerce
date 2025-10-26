@@ -111,7 +111,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-outline-primary:hover {
     background-color: var(--hover-color, var(--primary-color));
     border-color: var(--hover-color, var(--primary-color));
-    color: #fff !important;
+    /* color: #fff !important; */ /* Removed to prevent text color change on hover */
 }
 
 /* Header Styles */
@@ -348,6 +348,7 @@ h1, h2, h3, h4, h5, h6 {
     border-color: #c9a96e;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    color: #ffffff !important; /* Keep text color white on hover */
 }
 
 .header-actions .btn-link {
