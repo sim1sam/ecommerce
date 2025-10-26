@@ -1208,7 +1208,7 @@
                         <h6 class="mb-3">Payment Methods</h6>
                         <div class="payment-methods">
                             @if($footer && $footer->payment_images)
-                                <img src="{{ asset($footer->payment_images) }}" alt="Payment Methods" class="img-fluid" style="max-height: 40px;">
+                                <img src="{{ asset($footer->payment_images) }}" alt="Payment Methods" class="img-fluid" style="max-height: 80px;">
                             @else
                                 <div class="d-flex flex-wrap gap-2">
                                     <i class="fab fa-cc-visa text-muted" style="font-size: 1.5rem;"></i>
@@ -1227,12 +1227,12 @@
         <div class="footer-bottom border-top border-secondary py-3">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <p class="text-muted mb-0">&copy; {{ date('Y') }} {{ $footer->copyright ?? 'Diamonds Jewellery Collection. All rights reserved.' }}</p>
                     </div>
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-6 text-end">
                         <!-- Developed By Link -->
-                        <div class="developed-by mb-2">
+                        <div class="developed-by">
                             @if($footer && $footer->developed_by_text && $footer->developed_by_link)
                                 <a href="{{ $footer->developed_by_link }}" target="_blank" class="text-muted text-decoration-none">
                                     {{ $footer->developed_by_text }}
@@ -1243,14 +1243,6 @@
                                 </a>
                             @endif
                         </div>
-                        
-                        <!-- Middle Image -->
-                        @if($footer && $footer->middle_image)
-                            <img src="{{ asset($footer->middle_image) }}" alt="Footer Image" class="img-fluid" style="max-height: 40px;">
-                        @endif
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <!-- Empty space - payment methods moved to main footer -->
                     </div>
                 </div>
             </div>
