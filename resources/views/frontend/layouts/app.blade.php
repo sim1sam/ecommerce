@@ -1205,27 +1205,19 @@
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="footer-widget">
-                        <h6 class="mb-3">{{ $footer->third_column ?? 'Contact Info' }}</h6>
-                        <div class="contact-info">
-                            @if($footer && $footer->address)
-                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> {{ $footer->address }}</p>
+                        <h6 class="mb-3">Payment Methods</h6>
+                        <div class="payment-methods">
+                            @if($footer && $footer->payment_images)
+                                <img src="{{ asset($footer->payment_images) }}" alt="Payment Methods" class="img-fluid" style="max-height: 40px;">
                             @else
-                                <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i> 123 Jewellery Street, Diamond City, DC 12345</p>
-                            @endif
-                            @if($footer && $footer->phone)
-                                <p class="text-muted mb-2"><i class="fas fa-phone me-2"></i> {{ $footer->phone }}</p>
-                            @else
-                                <p class="text-muted mb-2"><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</p>
-                            @endif
-                            @if($footer && $footer->email)
-                                <p class="text-muted mb-2"><i class="fas fa-envelope me-2"></i> {{ $footer->email }}</p>
-                            @else
-                                <p class="text-muted mb-2"><i class="fas fa-envelope me-2"></i> info@diamondsjewelry.com</p>
-                            @endif
-                            @if($footer && $footer->working_hours)
-                                <p class="text-muted"><i class="fas fa-clock me-2"></i> {{ $footer->working_hours }}</p>
-                            @else
-                                <p class="text-muted"><i class="fas fa-clock me-2"></i> Mon - Sat: 9:00 AM - 8:00 PM</p>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <i class="fab fa-cc-visa text-muted" style="font-size: 1.5rem;"></i>
+                                    <i class="fab fa-cc-mastercard text-muted" style="font-size: 1.5rem;"></i>
+                                    <i class="fab fa-cc-amex text-muted" style="font-size: 1.5rem;"></i>
+                                    <i class="fab fa-cc-discover text-muted" style="font-size: 1.5rem;"></i>
+                                    <i class="fab fa-cc-paypal text-muted" style="font-size: 1.5rem;"></i>
+                                    <i class="fab fa-cc-stripe text-muted" style="font-size: 1.5rem;"></i>
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -1258,17 +1250,7 @@
                         @endif
                     </div>
                     <div class="col-md-4 text-center">
-                        <!-- Payment Methods -->
-                        <div class="payment-methods d-flex justify-content-center">
-                            @if($footer && $footer->payment_images)
-                                <img src="{{ asset($footer->payment_images) }}" alt="Payment Methods" class="img-fluid" style="max-height: 25px;">
-                            @else
-                                <i class="fab fa-cc-visa text-muted me-2"></i>
-                                <i class="fab fa-cc-mastercard text-muted me-2"></i>
-                                <i class="fab fa-cc-paypal text-muted me-2"></i>
-                                <i class="fab fa-cc-stripe text-muted"></i>
-                            @endif
-                        </div>
+                        <!-- Empty space - payment methods moved to main footer -->
                     </div>
                 </div>
             </div>
