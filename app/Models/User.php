@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\Notifications\CustomEmailVerification;
 
 class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
@@ -75,6 +76,14 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
         return [];
     }
 
-
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new CustomEmailVerification);
+    }
 
 }
