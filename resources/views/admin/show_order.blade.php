@@ -279,7 +279,7 @@
 
               <div class="text-md-right print-area">
                 <hr>
-                <button class="btn btn-success btn-icon icon-left print_btn"><i class="fas fa-print"></i> {{__('admin.Print')}}</button>
+                <a href="{{ route('admin.order-print', $order->id) }}" target="_blank" class="btn btn-success btn-icon icon-left"><i class="fas fa-print"></i> {{__('admin.Print Invoice')}}</a>
                 <button class="btn btn-danger btn-icon icon-left" data-toggle="modal" data-target="#deleteModal" onclick="deleteData({{ $order->id }})"><i class="fas fa-times"></i> {{__('admin.Delete')}}</button>
               </div>
             </div>

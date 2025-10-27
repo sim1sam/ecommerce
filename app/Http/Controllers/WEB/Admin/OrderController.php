@@ -89,6 +89,12 @@ class OrderController extends Controller
         return view('admin.show_order',compact('order','setting','countries','city','state','brands','categories','products'));
     }
 
+    public function print($id){
+        $order = Order::with('user','orderProducts.orderProductVariants','orderAddress')->find($id);
+        $setting = Setting::first();
+        return view('admin.print_order',compact('order','setting'));
+    }
+
     public function updateOrderStatus(Request $request , $id){
         $rules = [
             'order_status' => 'required',
